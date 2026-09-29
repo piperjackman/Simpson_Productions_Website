@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="Author" content="Piper Jackman">
+  <meta name="Year" content="2026">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theatre at Simpson</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="icon" type="image/png" href="images/Simpson_college_logo.png">
+</head>
+
+<body>
+  <header>
+    <img src="images/simp-prod-logo-white.png" alt="Simpson Productions Logo" width="220">
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="simpson_theatre.html" class="active">Home</a></li>
+      <li><a href="shows.html">Shows</a></li>
+      <li><a href="departments.html">Departments</a></li>
+      <li><a href="virtual_tour.html">Virtual Tour</a></li>
+      <li><a href="show_photos.html">Show Photos</a></li>
+      <li><a href="meet_the_team.html">Meet the Team</a></li>
+    </ul>
+  </nav>
+
+<div id="highlightPanel" class="highlight-panel open">
+  <div class="highlight-header">
+    <h4>Upcoming Season</h4>
+    <button id="closeHighlight" class="highlight-close">➜</button>
+  </div>
+
+  <div class="highlight-info">
+
+    <p><strong>2026–2027 Season at a Glance</strong></p>
+
+    <div class="highlight-glance">
+
+      <div class="highlight-item">
+        <strong>Little Red Riding Hood</strong>
+        <p>October 2026 • Ann Woldt</p>
+      </div>
+
+      <div class="highlight-item">
+        <strong>Two Gentlemen of Verona</strong>
+        <p>November 2026 • Jennifer Ross Nostrala</p>
+      </div>
+
+      <div class="highlight-item">
+        <strong>FSP 26: Thornton Wilder</strong>
+        <p>December 2026 • Student Directors</p>
+      </div>
+
+      <div class="highlight-item">
+        <strong>Orlando</strong>
+        <p>February 2027 • Kara Raphaeli</p>
+      </div>
+
+      <div class="highlight-item">
+        <strong>Pippin</strong>
+        <p>April 2027 • Jennifer Ross Nostrala</p>
+      </div>
+
+    </div>
+
+    <p style="margin-top: 1rem; color: #A00D24;"><em>Full details on the Shows page.</em></p>
+
+  </div>
+</div>
+
+
+
+<!-- Reopen Button -->
+<button id="openHighlight" class="highlight-open hidden">➜</button>
+
+
+  <main>
+
+    <div class="content-wrapper">
+      <h1>Welcome to Simpson Productions</h1>
+      <p>
+        Founded in 2019, Simpson Productions is an interdiscipinary, collaborative partnership between the departments 
+        of Theatre and Music at Simpson College. Previously, two separate production entities, this merger of theatrical 
+        and operatic programming fosters greater creativity and connectivity across the college, allowing us to share
+        resources, experiences, and talents of students and professors alike. We seek to offer innovative and diverse 
+        programing to both the Simpson community and the greater Central Iowa region, keeping our college's values of 
+        curiosity, discovery, and integrity at the core.
+      </p>
+
+      <p><strong>Vision:</strong></p>
+      <p>
+        To create a unique, nationally recognized academic performance community for the study and practice of 
+        theatre, musicals, and opera.
+      </p>  
+
+      <p><strong>Mission:</strong></p>
+      <ul>
+        <li>To present high-quality productions that offer our students and audiences experiences that embrace diverse performance modes.</li>
+        <li>To explore performance as a communication tool and form of service that can reach multiple audiences.</li>
+        <li>To provide students with various opportunities to design, perform, and create collaboratively.</li>
+      </ul>
+    
+    </div>
+  </main>
+
+  <button id="backToTop">↑ Top</button>
+
+  <footer></footer>
+  <script src="footer.js"></script>
+
+  <script src="backtotop.js"></script>
+
+<script>
+  const panel = document.getElementById("highlightPanel");
+  const closeBtn = document.getElementById("closeHighlight");
+  const openBtn = document.getElementById("openHighlight");
+
+  closeBtn.addEventListener("click", () => {
+    panel.classList.remove("open");
+    panel.classList.add("closed");
+
+    // show reopen tab
+    openBtn.classList.remove("hidden");
+
+    // flip arrow on reopen tab
+    openBtn.textContent = "←";
+  });
+
+  openBtn.addEventListener("click", () => {
+    panel.classList.remove("closed");
+    panel.classList.add("open");
+
+    // hide reopen tab
+    openBtn.classList.add("hidden");
+
+    // reset arrow on close button
+    closeBtn.textContent = "➜";
+  });
+</script>
+
+
+
+</body>
+</html>

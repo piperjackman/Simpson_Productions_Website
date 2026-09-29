@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="Author" content="Piper Jackman">
+  <meta name="Year" content="2026">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theatre at Simpson</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="icon" type="image/png" href="images/Simpson_college_logo.png">
+</head>
+
+<body>
+  <header>
+    <img src="images/simp-prod-logo-white.png" alt="Simpson Productions Logo" width="220">
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="simpson_theatre.html">Home</a></li>
+      <li><a href="shows.html">Shows</a></li>
+      <li><a href="departments.html">Departments</a></li>
+      <li><a href="virtual_tour.html" class="active">Virtual Tour</a></li>
+      <li><a href="show_photos.html">Show Photos</a></li>
+      <li><a href="meet_the_team.html">Meet the Team</a></li>
+    </ul>
+  </nav>
+
+<main>
+    <div class="content-wrapper">
+
+      <h2>Virtual Tour</h2>
+      <p>Explore the performance and rehearsal spaces used by Simpson Productions. More locations and photos will be added soon!</p>
+
+      <section class="tour-map">
+        <h3>513 N D St, Indianola, IA 50125</h3>
+        <img 
+        src="images/Bpac map.png" 
+        alt="BPAC Building Map" 
+        class="tour-photo lightbox-trigger"
+        data-caption="513 N D St, Indianola, IA 50125"
+        >
+      </section>
+
+      <section class="tour-card">
+        <img 
+        src="images/BPAC.jpg" 
+        alt="Blank Performing Arts Center Exterior" 
+        class="tour-photo lightbox-trigger"
+        data-caption="Blank Performing Arts Center (BPAC)"
+        >
+        <div class="tour-info">
+          <h3>Blank Performing Arts Center (BPAC)</h3>
+          <p>The home of Simpson Productions. BPAC houses Pote Theatre, Barnum Studio Theatre, rehearsal rooms, costume and scene shops, 
+            and faculty offices.</p>
+        </div>
+      </section>
+
+      <section class="tour-card">
+        <img 
+        src="images/Pote Stage.jpg" 
+        alt="Pote Theatre" 
+        class="tour-photo lightbox-trigger"
+        data-caption="Pote Theatre"
+        >
+        <div class="tour-info">
+          <h3>Pote Theatre</h3>
+          <p>The main performance space for Simpson Productions, featuring full lighting, sound, and seating for audiences. Pote hosts 
+            musicals, plays, operas, and large-scale productions throughout the year.</p>
+        </div>
+      </section>
+
+      <section class="tour-card">
+        <img 
+        src="images/Barnum.jpg" 
+        alt="Barnum Studio Theatre" 
+        class="tour-photo lightbox-trigger"
+        data-caption="Barnum Studio Theatre"
+        >
+        <div class="tour-info">
+          <h3>Barnum Studio Theatre</h3>
+          <p>A flexible black box space used for intimate productions, rehearsals, student-directed work, and experimental theatre.</p>
+        </div>
+      </section>
+
+      <!-- Add more tour-card sections as you get more photos -->
+
+    </div>
+  </main>
+
+
+  <button id="backToTop">↑ Top</button>
+
+  
+  <footer></footer>
+  <script src="footer.js"></script>
+  <script src="backtotop.js"></script>
+
+    <!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox">
+  <span class="lightbox-close">&times;</span>
+  <img class="lightbox-img" alt="">
+  <div class="lightbox-caption"></div>
+  <button class="lightbox-prev">&#10094;</button>
+  <button class="lightbox-next">&#10095;</button>
+</div>
+
+<script src="lightbox.js"></script>
+
+
+</body>
+</html>

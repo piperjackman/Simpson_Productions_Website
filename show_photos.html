@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8">
+  <meta name="Author" content="Piper Jackman">
+  <meta name="Year" content="2026">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theatre at Simpson</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="icon" type="image/png" href="images/Simpson_college_logo.png">
+</head>
+
+<body>
+  <header>
+    <img src="images/simp-prod-logo-white.png" alt="Simpson Productions Logo" width="220">
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="simpson_theatre.html">Home</a></li>
+      <li><a href="shows.html">Shows</a></li>
+      <li><a href="departments.html">Departments</a></li>
+      <li><a href="virtual_tour.html">Virtual Tour</a></li>
+      <li><a href="show_photos.html" class="active">Show Photos</a></li>
+      <li><a href="meet_the_team.html">Meet the Team</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="content-wrapper">
+    <h2>Show Photos</h2>
+
+    <div class="photo-controls">
+      <div class="photo-search">
+        <input type="text" id="searchInput" placeholder="Search by name, show, or date...">
+      </div>
+
+      <div class="photo-sort">
+        <label for="sortSelect"><strong>Sort by:</strong></label>
+        <select id="sortSelect">
+          <option value="default">Default</option>
+          <option value="date-newest">Date (Newest → Oldest)</option>
+          <option value="date-oldest">Date (Oldest → Newest)</option>
+          <option value="show-az">Show (A → Z)</option>
+          <option value="show-za">Show (Z → A)</option>
+          <option value="name-az">Performer (A → Z)</option>
+          <option value="name-za">Performer (Z → A)</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="loadingPhotos" class="loading-spinner">
+     <div class="spinner"></div>
+      <p>Loading photos…</p>
+    </div>
+
+
+    <div class="photo-gallery" id="photoGallery"></div>
+    </div>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+
+    <button class="lightbox-prev">&#10094;</button>
+    <button class="lightbox-next">&#10095;</button>
+
+    <img class="lightbox-img" src="" alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+
+<script>
+
+  let currentIndex = 0;
+
+// =========================
+//  TIMEZONE-SAFE DATE FORMATTER
+// =========================
+  function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-");
+
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    const monthIndex = parseInt(month, 10) - 1;
+    const dayNum = parseInt(day, 10);
+
+    const suffix =
+      dayNum % 10 === 1 && dayNum !== 11 ? "st" :
+      dayNum % 10 === 2 && dayNum !== 12 ? "nd" :
+      dayNum % 10 === 3 && dayNum !== 13 ? "rd" : "th";
+
+    return `${monthNames[monthIndex]} ${dayNum}${suffix}, ${year}`;
+  }
+
+  // =========================
+  //  GLOBAL PHOTO STORAGE
+  // =========================
+  let allPhotos = [];
+  const loadingBox = document.getElementById("loadingPhotos");
+  let filteredPhotos = [];
+
+  // =========================
+  //  FETCH + INITIAL RENDER
+  // =========================
+  fetch("photos.json?nocache=" + Date.now())
+    .then(res => res.json())
+    .then(data => {
+  allPhotos = data;
+  filteredPhotos = [...allPhotos];
+
+  loadingBox.classList.add("hidden"); // HIDE THE LOADING SPINNER
+
+  renderPhotos(filteredPhotos);
+});
+
+
+  // =========================
+  //  RENDER FUNCTION
+  // =========================
+  function renderPhotos(photoArray) {
+    const gallery = document.getElementById("photoGallery");
+    gallery.innerHTML = "";
+
+    photoArray.forEach(photo => {
+      const card = document.createElement("div");
+      card.classList.add("photo-card");
+
+      const formattedDate = formatDate(photo.date);
+
+      card.innerHTML = `
+        <img 
+          src="${photo.image}" 
+          alt="${photo.show}"
+          data-show="${photo.show}"
+          data-name="${photo.name}"
+          data-date="${photo.date}"
+        >
+        <p><strong>Show:</strong> ${photo.show}</p>
+        <p><strong>Performer(s):</strong> ${photo.name}</p>
+        <p><strong>Date:</strong> ${formattedDate}</p>
+      `;
+
+      gallery.appendChild(card);
+    });
+  }
+
+  // =========================
+  //  SEARCH FUNCTIONALITY
+  // =========================
+  document.getElementById("searchInput").addEventListener("input", (e) => {
+    const query = e.target.value.toLowerCase();
+
+    filteredPhotos = allPhotos.filter(photo =>
+      photo.show.toLowerCase().includes(query) ||
+      photo.name.toLowerCase().includes(query) ||
+      formatDate(photo.date).toLowerCase().includes(query)
+    );
+
+    applySort();
+    renderPhotos(filteredPhotos);
+  });
+
+  // =========================
+  //  SORT FUNCTIONALITY
+  // =========================
+  document.getElementById("sortSelect").addEventListener("change", () => {
+    applySort();
+    renderPhotos(filteredPhotos);
+  });
+
+  function applySort() {
+    const sortValue = document.getElementById("sortSelect").value;
+
+    switch (sortValue) {
+      case "date-newest":
+        filteredPhotos.sort((a, b) => new Date(b.date) - new Date(a.date));
+        break;
+
+      case "date-oldest":
+        filteredPhotos.sort((a, b) => new Date(a.date) - new Date(b.date));
+        break;
+
+      case "show-az":
+        filteredPhotos.sort((a, b) => a.show.localeCompare(b.show));
+        break;
+
+      case "show-za":
+        filteredPhotos.sort((a, b) => b.show.localeCompare(a.show));
+        break;
+
+      case "name-az":
+        filteredPhotos.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+
+      case "name-za":
+        filteredPhotos.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+
+      default:
+        break;
+    }
+  }
+
+
+  //  LIGHTBOX
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.querySelector(".lightbox-img");
+const closeBtn = document.querySelector(".lightbox-close");
+const captionBox = document.querySelector(".lightbox-caption");
+
+
+function openLightbox(index) {
+  const photo = filteredPhotos[index];
+
+  lightbox.style.display = "flex";
+  lightboxImg.src = photo.image;
+
+  const formattedDate = formatDate(photo.date);
+
+  captionBox.innerHTML = `
+    <strong>${photo.show}</strong><br>
+    ${photo.name}<br>
+    <em>${formattedDate}</em>
+  `;
+}
+
+
+document.addEventListener("click", (e) => {
+  if (e.target.matches(".photo-card img")) {
+    const clickedSrc = e.target.getAttribute("src");
+    currentIndex = filteredPhotos.findIndex(p => p.image === clickedSrc);
+    openLightbox(currentIndex);
+  }
+});
+
+
+document.querySelector(".lightbox-next").addEventListener("click", () => {
+  currentIndex = (currentIndex + 1) % filteredPhotos.length;
+  openLightbox(currentIndex);
+});
+
+
+document.querySelector(".lightbox-prev").addEventListener("click", () => {
+  currentIndex = (currentIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
+  openLightbox(currentIndex);
+});
+
+
+document.addEventListener("keydown", (e) => {
+  if (lightbox.style.display === "flex") {
+    if (e.key === "ArrowRight") {
+      currentIndex = (currentIndex + 1) % filteredPhotos.length;
+      openLightbox(currentIndex);
+    }
+    if (e.key === "ArrowLeft") {
+      currentIndex = (currentIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
+      openLightbox(currentIndex);
+    }
+    if (e.key === "Escape") {
+      lightbox.style.display = "none";
+    }
+  }
+});
+
+closeBtn.addEventListener("click", () => {
+  lightbox.style.display = "none";
+});
+
+
+lightbox.addEventListener("click", (e) => {
+  if (e.target === lightbox) {
+    lightbox.style.display = "none";
+  }
+});
+
+</script>
+
+
+
+  <button id="backToTop">↑ Top</button>
+
+  <footer></footer>
+  <script src="footer.js"></script>
+
+
+  <script src="backtotop.js"></script>
+
+</body>
+</html>
