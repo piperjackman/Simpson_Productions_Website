@@ -40,23 +40,46 @@ The project emphasizes accessibility, responsive design, and maintainability.
 
 ---
 
+## Admin Panel & Photo Management System
+
+In addition to the public-facing gallery, this project includes a custom admin interface that allows authorized users to manage photo content without editing files manually. The admin panel provides full CRUD functionality:
+
+- **Upload Photos** — Add new images to the gallery with show titles, performer names, and dates  
+- **Edit Photo Metadata** — Update titles, descriptions, or associated show information  
+- **Delete Photos** — Remove outdated or incorrect images from both the gallery and the file system  
+- **Automatic JSON Updates** — All changes write directly to `photos.json`, ensuring the gallery updates instantly  
+- **Secure Access** — Admin tools are protected behind a login page to prevent unauthorized changes  
+
+This system functions as a lightweight CMS, enabling Simpson Productions staff to maintain and update the gallery easily over time.
+
+---
+
 ## File Structure
 ```
 simpson-productions-website/
 │
-├── index.html
-├── showphotos.html
+├── admin_login.php
+├── admin_panel.php
+├── upload_photo.php
+├── edit_photo.php
+├── update_photo.php
+├── delete_photo.php
+│
+├── simpson_theatre.html
+├── show_photos.html
+├── shows.html
 ├── departments.html
-├── meettheteam.html
-├── seasonarchive.html
+├── meet_the_team.html
+├── virtual_tour.html
+├── footer.html
 │
 ├── css/
 │   └── main.css
 │
 ├── js/
-│   ├── showphotos.js
-│   ├── lightbox.js
-│   └── backtotop.js
+│   ├── backtotop.js
+│   ├── footer.js
+│   └── lightbox.js
 │
 ├── data/
 │   └── photos.json
